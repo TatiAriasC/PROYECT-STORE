@@ -1,0 +1,101 @@
+<%- include('../../layouts/header',{title: 'BOUTIQUE ELENA'}); -%>
+<body>
+    <header>
+      <nav class="navbar navbar-expand-lg bg-body-tertiary bg-light border-bottom border-bottom-dark" data-bs-theme="light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">
+            <img src="/style/images/logo.png" alt="logo" class="logoEmp">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" href="/admin/shopping/shoppingList">Ventas</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/admin/products/productsList">Inventario</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/admin/users/usersList">Usuarios</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/auth/logout">Cerrar sesión</a>
+              </li>
+            </ul>
+            <form class="d-flex" role="search" action="/admin/products/productsList" method="GET">
+              <input class="form-control me-2" type="search" placeholder="¿Qué producto buscas?" aria-label="Search" id="filtro" name="filtro">
+              <button class="btn btn-outline-success" type="submit" id="btnBuscar">Buscar</button>
+            </form>
+          </div>
+        </div>
+      </nav>
+
+    <br />
+
+    <div class="container">
+      <div class="row">
+          <div class="col-12"><br />
+              <h1 class="alert alert-success text-center">INVENTARIO</h1>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-12">
+              <table class="table table-bordered table-striped">
+                  <thead>
+                      <tr>
+                          <th scope="col">ID</th>
+                          <th scope="col">CODIGO</th>
+                          <th scope="col">NOMBRE</th>
+                          <th scope="col">DESCRIPCIÓN</th>
+                          <th scope="col">TIPO</th>
+                          <th scope="col">MARCA</th>
+                          <th scope="col">TALLA</th>
+                          <th scope="col">PRECIO</th>
+                          <th scope="col">PROVEEDOR</th>
+                          <th scope="col">FECHA</th>
+                          <th scope="col">FOTO</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <% products.map( product => { %>
+                          <tr>
+                              <th scope="row"><%= product.id %></th>
+                              <td><%= product.codigoProducto %></td>
+                              <td><%= product.nombreProducto %></td>
+                              <td><%= product.descripcionProducto %></td>
+                              <td><%= product.tipoProducto %></td>
+                              <td><%= product.marcaProducto %></td>
+                              <td><%= product.tallaProducto %></td>
+                              <td><%= product.precioProducto %></td>
+                              <td><%= product.proveedor %></td>
+                              <td><%= product.fechaingreso %></td>
+                              <td><img src="<%= product.fotoProducto %>" class="img-fluid" style="border-radius: 10px;"></td>
+                              <td align="center"><a href="/admin/products/productsList/generate-pdf/<%=product.id%>" target="_blank" class="btn btn-info">PDF</a></td>
+                              <td align="center">
+                                <form action="/admin/products/productsList/Delete/<%=product.id%>" method="post"
+                                  onsubmit= "return confirm('Está seguro de borrar el registro?');"
+                                  >
+                                <button type="submit" class="btn btn-danger">BORRAR</button>
+                              </form>
+                              </td>
+                          </tr>
+                      <% }) %>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-12 d-grid">
+              <a href="/admin/products/productsCreate" class="btn btn-outline-secondary">
+                  Crear un nuevo producto
+              </a>
+          </div>
+      </div>
+  </div>
+  <br />
+</header>
+
+<%- include('../../layouts/footer'); -%>
+   

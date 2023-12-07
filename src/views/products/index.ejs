@@ -1,0 +1,182 @@
+<%- include('../layouts/header',{title: 'BOUTIQUE ELENA'}); -%>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg bg-body-tertiary bg-light border-bottom border-bottom-dark" data-bs-theme="light">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="/">
+                    <img src="/style/images/logo.png" alt="logo" class="logoEmp">
+                </a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/auth/signIn">Login</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/shopping-car">Shopping</a>
+                        </li>
+                    </ul>
+                    <form class="d-flex" role="search" action="/shopping-car" method="GET">
+                        <select class="form-control me-2" id="filtro" name="filtro">
+                            <!-- JavaScript para eliminar duplicados y ordenar alfabéticamente -->
+                            <% const uniqueTypes = Array.from(new Set(products.map(product => product.tipoProducto))).sort(); %>
+                            <% uniqueTypes.forEach(productType => { %>
+                                <option value="<%= productType %>"><%= productType %></option>
+                            <% }); %>
+                        </select>
+                        <button class="btn btn-outline-success" type="submit" id="btnBuscar">Filtrar</button>
+                    </form>
+
+                    <!-- <form class="d-flex" role="search" action="/shopping-car" method="GET">
+                        <input class="form-control me-2" type="search" placeholder="¿Qué producto buscas?" aria-label="Search"
+                            id="filtro" name="filtro">
+                        <button class="btn btn-outline-success" type="submit" id="btnBuscar">Buscar</button>
+                    </form> -->
+                    
+                </div>
+            </div>
+        </nav>
+
+        <!-- Acordeón para el catálogo y el carrito -->
+        <div class="accordion" id="accordionShopping-Car">
+          <!-- Catálogo de productos -->
+          <div class="accordion-item">
+              <h2 class="accordion-header" id="headingOne">
+                  <button class="accordion-button" type="button" data-toggle="collapse" data-target="#collapseOne"
+                      aria-expanded="true" aria-controls="collapseOne">
+                      Catálogo de Productos
+                  </button>
+              </h2>
+              <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne">
+                  <div class="accordion-body">
+                      <!-- Contenido del catálogo de productos -->
+                      <!-- Mostrar el contenido de los productos en venta -->
+                      <div class="container">
+                        <div class="row">
+                            <h1 class="alert alert-success text-center">CATÁLOGO DE PRODUCTOS</h1>
+                            <% products.forEach((product, index) => { %>
+                            <% if (index % 2 === 0) { %>
+                            </div>
+                            <div class="row">
+                                <% } %>
+                                <div class="col-md-6">
+                                    <!-- Contenido del producto -->
+                                    <div class="container">
+                                        <div class="table-responsive-xxl">
+                                            <table class="table table-hover table-bordered">
+                                                <tbody>
+                                                    <tr>
+                                                        <td><img src="<%= product.fotoProducto %>" class="img-fluid"
+                                                                style="border-radius: 10px;"></td>
+                                                        <th hidden><%= product.id %></th>
+                                                        <th>
+                                                            <p class="conte">
+                                                                Código: <%= product.codigoProducto %><br>
+                                                                <span class="tituloProd"><%= product.nombreProducto %></span><br>
+                                                                <%= product.descripcionProducto %><br><br>
+                                                                Marca: <%= product.marcaProducto %><br>
+                                                                Tipo: <%= product.tipoProducto %><br>
+                                                                Talla: <%= product.tallaProducto %><br><br>
+
+                                                                <span class="precioProd">Precio: $<%= product.precioProducto %></span><br>
+                                                            </p>
+                                                            <form class="conte" action="/shopping-car/addToCart" method="POST">
+                                                                <input type="hidden" name="productId" value="<%= product.id %>">
+                                                                <input type="hidden" name="productName" value="<%= product.nombreProducto %>">
+                                                                <input type="hidden" name="productCode" value="<%= product.codigoProducto %>">
+                                                                <input type="hidden" name="productTalla" value="<%= product.tallaProducto %>">
+                                                                <input type="hidden" name="productPrice" value="<%= product.precioProducto %>">
+                                                                <input type="number" name="quantity" min="1" max="20" value="1" style="text-align: center; width: 40px;">
+                                                                <button type="submit">Agregar al carro</button>
+                                                            </form>
+                                                        </th>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <% }); %>
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+              </div>
+          </div>
+
+          <!-- Carrito de compras -->
+          <div class="accordion-item">
+              <h2 class="accordion-header" id="headingTwo">
+                  <button class="accordion-button collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo"
+                      aria-expanded="false" aria-controls="collapseTwo">
+                      Carrito de Compras
+                  </button>
+              </h2>
+              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo">
+                  <div class="accordion-body">
+                      <!-- Contenido del carrito de compras -->
+                      <!-- Mostrar el carrito de compras -->
+                      <div class="container">
+                        <h2 class="mt-5">Carrito de Compras</h2>
+                        <div class="table-responsive">
+                          <table class="table table-bordered table-sm"> <!-- Agrega la clase 'table-sm' para hacer la tabla más pequeña -->
+                            <thead>
+                              <tr>
+                                <th>Detalle del Producto</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <% let totalCompra = 0; %>
+                              <% cart.forEach((item) => { %>
+                              <tr>
+                                <td>
+                                  <strong><%= item.name %></strong><br>
+                                  Código: <%= item.code %><br>
+                                  Talla: <%= item.talla %><br>
+                                  Cantidad: <%= item.quantity %><br>
+                                  Precio Unidad: <%= item.price %><br>
+                                  Precio Total: <%= item.totalproduct %><br>
+
+                                  <form action="/shopping-car/removeFromCart" method="POST">
+                                    <input type="hidden" name="productId" value="<%= item.id %>">
+                                    <button type="submit" class="btn btn-danger btn-sm">Quitar</button> <!-- Agrega la clase 'btn-sm' para hacer el botón más pequeño -->
+                                  </form>
+                                  <!-- Agrega más detalles según sea necesario -->
+                                </td>
+                              </tr>
+                              <% totalCompra += item.totalproduct; %>
+                              <% }); %>
+                            </tbody>
+                          </table>
+                        </div>
+
+                        <!-- Mostrar el total de la compra -->
+                        <p>Total de la compra: $<%= totalCompra.toFixed(2) %><br>
+                            <form action="/shopping-car/confirmPurchase" method="POST">
+                                <button type="submit">Confirmar Compra</button>
+                            </form>
+                        </p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <br />
+  </header>
+  <%- include('../layouts/footer'); -%>
+
+  <!-- Scripts de Bootstrap 4 -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+      crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"></script>
+
+</body>

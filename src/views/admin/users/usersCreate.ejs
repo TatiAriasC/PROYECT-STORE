@@ -1,0 +1,69 @@
+<%- include('../../layouts/header',{title: 'BOUTIQUE ELENA'}); -%>
+<body>
+    <header>
+      <nav class="navbar navbar-expand-lg bg-body-tertiary bg-light border-bottom border-bottom-dark" data-bs-theme="light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">
+            <img src="/style/images/logo.png" alt="logo" class="logoEmp">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" href="">Ventas</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/admin/products/productsList">Inventario</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/admin/users/usersList">Usuarios</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/auth/logout">Cerrar sesión</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+    <br />
+
+    <div class="container">
+        <div class="row">
+            <div class="col-12"><br />
+                <h1 class="alert alert-success text-center"> Crear un nuevo usuario</h1>
+            </div>
+        </div>
+            <div class="row">
+            <div class="col-12">
+                <form action="/admin/users" method="post" class="row">
+                    <div class="col-6">
+                        <label for="nombreCompleto" class="form-label">NOMBRE COMPLETO</label>
+                        <input type="text" name="nombreCompleto" id="nombreCompleto" class="form-control" required>
+                    </div>
+                    <div class="col-6">
+                        <label for="nombreUser" class="form-label">NOMBRE DE USUARIO</label>
+                        <input type="text" name="nombreUser" id="nombreUser" class="form-control">
+                    </div>
+                    <div class="col-6">
+                      <label for="passwdUser" class="form-label">PASSWORD</label>
+                      <input type="password" name="passwdUser" id="passwdUser" class="form-control">
+                  </div>
+                    <div class="row">
+                        <div class="col-12 d-grid mt-4">
+                            <button type="submit" class="btn btn-outline-secondary">Crear</button>
+                        </div>
+                    </div>
+        </div>
+            <div class="row">
+                <div class="col-12 d-grid mt-4">
+                    <a href="/admin/users/usersList" class="btn btn-outline-secondary">
+                        Volver a la lista de los usuarios en el DASHBOARD
+                        </a>
+         </div>
+    </div>
+</header>
+<br /><br /><br /><br /><br /><br />
+<%- include('../../layouts/footer'); -%>

@@ -1,0 +1,78 @@
+<%- include('../../layouts/header',{title: 'BOUTIQUE ELENA'}); -%>
+<body>
+    <header>
+      <nav class="navbar navbar-expand-lg bg-body-tertiary bg-light border-bottom border-bottom-dark" data-bs-theme="light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">
+            <img src="/style/images/logo.png" alt="logo" class="logoEmp">
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link" href="/admin/shopping/shoppingList">Ventas</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/admin/products/productsList">Inventario</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/admin/users/usersList">Usuarios</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/auth/logout">Cerrar sesión</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+    <br />
+
+    <div class="container">
+      <div class="row">
+          <div class="col-12"><br />
+              <h1 class="alert alert-success text-center">LISTADO DE VENTAS - ECOMMERCE</h1>
+          </div>
+      </div>
+      <div class="row">
+          <div class="col-12">
+              <table class="table table-bordered table-striped">
+                  <thead>
+                      <tr>
+                          <th scope="col">ID DE VENTA</th>
+                          <th scope="col">ID DEL PRODUCTO</th>
+                          <th scope="col">ID DEL USUARIO</th>
+                          <th scope="col">CANTIDAD</th>
+                          <th scope="col">FECHA DE LA COMPRA</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      <% shoppinges.map( shopping => { %>
+                          <tr>
+                              <th scope="row"><%= shopping.id %></th>
+                              <td><%= shopping.productId %></td>
+                              <td><%= shopping.userId %></td>
+                              <td><%= shopping.quantity %></td>
+                              <td><%= shopping.createdAt %></td>
+                              <td align="center"><a href="/admin/shopping/shoppingList/generate-pdf/<%=shopping.id%>" target="_blank" class="btn btn-info">PDF</a></td>
+                              <td align="center">
+                                <form action="/admin/shopping/shoppingList/Delete/<%=shopping.id%>" method="post"
+                                  onsubmit= "return confirm('Está seguro de borrar el registro?');"
+                                  >
+                                <button type="submit" class="btn btn-danger">BORRAR</button>
+                              </form>
+                              </td>
+                          </tr>
+                      <% }) %>
+                  </tbody>
+              </table>
+          </div>
+      </div>
+  </div>
+  <br />
+</header>
+
+<%- include('../../layouts/footer'); -%>
+   
